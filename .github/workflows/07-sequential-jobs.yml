@@ -1,0 +1,28 @@
+name: 07 Sequential Jobs
+# Using 'needs' to create dependencies between jobs.
+
+on: push
+
+jobs:
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building..."
+
+  test:
+    name: Run Tests
+    needs: build
+    # This job will only start if 'build' completes successfully.
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Testing..."
+
+  deploy:
+    name: Deploy to Production
+    needs: [build, test]
+    # 'needs' can take an array of job IDs.
+    # It will only run if BOTH build and test succeed.
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying..."

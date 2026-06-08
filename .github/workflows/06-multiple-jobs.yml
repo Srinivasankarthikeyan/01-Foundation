@@ -1,0 +1,19 @@
+name: 06 Multiple Jobs
+# Demonstrating multiple jobs in a workflow.
+
+on: push
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is job 1"
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is job 2"
+
+# By default, job1 and job2 run in PARALLEL.
+# They run on completely separate runners/virtual machines.
+# They do not share a file system.

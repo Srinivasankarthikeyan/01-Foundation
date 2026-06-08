@@ -4,12 +4,8 @@ on:
   push:
     branches:
       - main
-      - 'releases/**'
+      - 'release/**'          # ← Fixed: was 'releases/**'
       - '!dev/**'
-    paths:
-      - 'src/**'
-      - '.github/workflows/02-push-trigger.yml'
-      - '!docs/**'
     tags:
       - 'v1.*'
 

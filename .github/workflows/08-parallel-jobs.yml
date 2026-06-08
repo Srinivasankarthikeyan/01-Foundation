@@ -1,0 +1,25 @@
+name: 08 Parallel Jobs
+# Explicitly demonstrating parallel execution.
+
+on: push
+
+jobs:
+  # These jobs have no 'needs' relationship, so they run at the same time.
+  # This is useful for running different types of tests (unit, lint, integration) simultaneously.
+  
+  linux-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running Linux tests..."
+
+  macos-tests:
+    runs-on: macos-latest
+    steps:
+      - run: echo "Running macOS tests..."
+
+  windows-tests:
+    runs-on: windows-latest
+    steps:
+      - run: echo "Running Windows tests..."
+      
+# Note: Total concurrent jobs depend on your GitHub plan limits.

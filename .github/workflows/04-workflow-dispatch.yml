@@ -24,10 +24,10 @@ on:
         required: true
 
       additional info:
-        descriptoin: 'Additional info for the run'
+        description: 'Additional infos'
         required: false
         type: boolean
-        
+
 jobs:
   print-tag:
     runs-on: ubuntu-latest

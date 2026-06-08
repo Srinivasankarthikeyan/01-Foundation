@@ -1,0 +1,35 @@
+name: 09 Environment Variables
+# Scoping of environment variables.
+
+# 1. Workflow level: Available to all jobs and steps.
+env:
+  WORKFLOW_VAR: "I am global"
+
+on: push
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    # 2. Job level: Available to all steps in this job.
+    env:
+      JOB_VAR: "I am for this job"
+      
+    steps:
+      - name: Print variables
+        # 3. Step level: Available only to this step.
+        env:
+          STEP_VAR: "I am for this step only"
+        run: |
+          echo "Workflow level: $WORKFLOW_VAR"
+          echo "Job level: $JOB_VAR"
+          echo "Step level: $STEP_VAR"
+          
+      - name: Verify step scope
+        run: |
+          echo "Can I see STEP_VAR? No: '$STEP_VAR'"
+          echo "Can I see JOB_VAR? Yes: '$JOB_VAR'"
+
+# Important for Exam:
+# - Case sensitivity: Variables are case-sensitive.
+# - Precedence: Step > Job > Workflow.
+# - Naming: Avoid starting with GITHUB_ (reserved).

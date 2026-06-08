@@ -1,0 +1,36 @@
+name: 01 Basic Workflow
+# The name of the workflow as it appears in the Actions tab of the GitHub repository.
+
+on: [push]
+# The 'on' keyword defines the event that triggers the workflow. 
+# [push] is a shorthand for triggering on any push to any branch.
+
+jobs:
+  # A workflow run is made up of one or more jobs.
+  # Jobs run in parallel by default unless specified otherwise.
+  
+  first-job:
+    # A unique identifier for the job.
+    name: My First Job
+    # The name of the job displayed on GitHub.
+    
+    runs-on: ubuntu-latest
+    # Defines the type of machine to run the job on. 
+    # 'ubuntu-latest' is the most common GitHub-hosted runner.
+
+    steps:
+      # A job contains a sequence of tasks called steps.
+      
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # 'uses' selects an Action (a reusable unit of code).
+        # actions/checkout is essential to download your repository's code onto the runner.
+
+      - name: Run a one-line script
+        run: echo "Hello, GitHub Actions!"
+        # 'run' executes a command-line program using the operating system's shell.
+
+      - name: Run a multi-line script
+        run: |
+          echo "Add other actions to build,"
+          echo "test, and deploy your project."

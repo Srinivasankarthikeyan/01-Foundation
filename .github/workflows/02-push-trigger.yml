@@ -1,32 +1,55 @@
 name: 02 Push Trigger
-# Detailed push trigger configuration for exam focus.
 
 on:
   push:
-    # Filtering by branches
+    # Run when code is pushed to the main branch
+    - main
+
+    # Run when code is pushed to any branch inside releases/
+    # Examples:
+    # releases/v1
+    # releases/v2
+    # releases/production/v1
     branches:
       - main
-      - 'releases/**' # Matches releases/v1, releases/v2, etc.
-    # Excluding specific branches
-    branches-ignore:
-      - 'dev/**'
-    # NOTE: You cannot use both 'branches' and 'branches-ignore' for the same event in a workflow.
-    
-    # Filtering by tags
+      - 'releases/**'
+
+      # Exclude branches matching dev/**
+      # Examples:
+      # dev/test
+      # dev/feature-login
+      - '!dev/**'
+
+    # Run when tags matching v1.* are pushed
+    # Examples:
+    # v1.0
+    # v1.1
+    # v1.2.3
     tags:
-      - v1.*
-    
-    # Filtering by paths (useful for monorepos)
+      - 'v1.*'
+
+    # Run only when files matching these patterns are changed
     paths:
+      # Any file inside src/
       - 'src/**'
+
+      # Run when this workflow file itself changes
       - '.github/workflows/02-push-trigger.yml'
-    # Excluding specific paths
-    paths-ignore:
-      - 'docs/**'
-    # NOTE: You cannot use both 'paths' and 'paths-ignore' for the same event.
+
+      # Exclude all files inside docs/
+      # Even if another path pattern matches
+      - '!docs/**'
 
 jobs:
   build:
+    # Use the latest Ubuntu GitHub-hosted runner
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "This workflow runs only on specific push events."
+      # Download repository code onto the runner
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Execute a shell command
+      - name: Display Success Message
+        run: echo "Workflow triggered successfully"

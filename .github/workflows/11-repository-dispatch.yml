@@ -1,0 +1,31 @@
+name: 11 Repository Dispatch
+# repository_dispatch allows you to trigger a workflow from an external source 
+# using the GitHub REST API (useful for cross-repo triggers).
+
+on:
+  repository_dispatch:
+    # types allow you to filter which dispatch events trigger this workflow.
+    # The 'event_type' in the API payload must match one of these.
+    types: [my-custom-event, deploy-trigger]
+
+jobs:
+  dispatch-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show Dispatch Payload
+        # The 'client_payload' object contains the JSON data sent in the API request.
+        run: |
+          echo "Event Type: ${{ github.event.action }}"
+          echo "Payload Message: ${{ github.event.client_payload.message }}"
+          echo "Triggered by: ${{ github.event.client_payload.user }}"
+
+# Exam Notes:
+# 1. To trigger this via CURL:
+#    curl -X POST -H "Accept: application/vnd.github.v3+json" \
+#    -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+#    https://api.github.com/repos/OWNER/REPO/dispatches \
+#    -d '{"event_type": "my-custom-event", "client_payload": {"message": "Hello", "user": "karthik"}}'
+#
+# 2. repository_dispatch vs workflow_dispatch:
+#    - workflow_dispatch: Triggered via GitHub UI or CLI.
+#    - repository_dispatch: Triggered via API/Webhooks from outside the specific repo.

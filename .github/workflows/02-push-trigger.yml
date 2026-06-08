@@ -1,0 +1,54 @@
+name: 02 Push Trigger
+
+# This workflow demonstrates filtering push events
+# using branches, tags, paths, and ignore patterns.
+
+on:
+  push:
+    # Branch filters - INCLUDE these branches
+    branches:
+      - main
+      - 'release/**'      # Fixed: was 'releases/**'
+      - 'feature/**'
+
+    # Exclude development branches - IGNORE these
+    # Note: Negation patterns must come AFTER positive patterns
+    ignore-branches:
+      - 'dev/**'
+      - 'test/**'
+      - 'hotfix/**'
+
+    # Tag filters
+    tags:
+      - 'v1.*'
+
+    # Path filters - INCLUDE these paths
+    paths:
+      - 'src/**'
+      - '.github/workflows/02-push-trigger.yml'
+      - 'config/**'
+
+    # Exclude documentation folder - IGNORE these paths
+    # Note: Negation patterns must come AFTER positive patterns
+    ignore-paths:
+      - 'docs/**'
+      - '*.md'
+      - '.gitignore'
+
+jobs:
+  build:
+    name: Build Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display Message
+        run: echo "Workflow triggered successfully"
+
+      - name: Print Context
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Repository: ${{ github.repository }}"

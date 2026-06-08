@@ -1,0 +1,33 @@
+name: 03 Pull Request Trigger
+# PR triggers are fundamental for CI.
+
+on:
+  pull_request:
+    # types allow you to trigger on specific PR activities.
+    # Default types: opened, synchronize, reopened.
+    types: [opened, edited, reopened, closed]
+    
+    branches:
+      - main
+    
+    # paths can also be used here to avoid unnecessary runs.
+    paths:
+       - '**/*.js'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+    steps:
+      - name: PR Info
+        run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "Action: ${{ github.event.action }}"
+          
+  on-close:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PR was merged!"

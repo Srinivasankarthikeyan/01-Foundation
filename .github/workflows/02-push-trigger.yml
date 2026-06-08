@@ -1,0 +1,32 @@
+name: 02 Push Trigger
+# Detailed push trigger configuration for exam focus.
+
+on:
+  push:
+    # Filtering by branches
+    branches:
+      - main
+      - 'releases/**' # Matches releases/v1, releases/v2, etc.
+    # Excluding specific branches
+    branches-ignore:
+      - 'dev/**'
+    # NOTE: You cannot use both 'branches' and 'branches-ignore' for the same event in a workflow.
+    
+    # Filtering by tags
+    tags:
+      - v1.*
+    
+    # Filtering by paths (useful for monorepos)
+    paths:
+      - 'src/**'
+      - '.github/workflows/02-push-trigger.yml'
+    # Excluding specific paths
+    paths-ignore:
+      - 'docs/**'
+    # NOTE: You cannot use both 'paths' and 'paths-ignore' for the same event.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This workflow runs only on specific push events."

@@ -1,0 +1,29 @@
+name: 05 Scheduled Cron Workflow
+# schedule uses POSIX cron syntax.
+
+on:
+  schedule:
+    # ┌───────────── minute (0 - 59)
+    # │ ┌───────────── hour (0 - 23)
+    # │ │ ┌───────────── day of the month (1 - 31)
+    # │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    # │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    # │ │ │ │ │
+    # │ │ │ │ │
+    # * * * * *
+    
+    # Run at 00:00 every Sunday
+    - cron: '0 0 * * 0'
+    # Run at 5:30 and 17:30 every day
+    - cron: '30 5,17 * * *'
+
+# NOTE: Scheduled workflows run on the default branch (usually main).
+# The shortest interval is 5 minutes.
+# Execution may be delayed during high load.
+
+jobs:
+  nightly-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Nightly task
+        run: echo "Running scheduled task at $(date)"

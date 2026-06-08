@@ -23,6 +23,11 @@ on:
         type: environment
         required: true
 
+      additional info:
+        descriptoin: 'Additional info for the run'
+        required: false
+        type: boolean
+        
 jobs:
   print-tag:
     runs-on: ubuntu-latest

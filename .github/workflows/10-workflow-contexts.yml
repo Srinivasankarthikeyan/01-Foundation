@@ -1,0 +1,31 @@
+name: 10 Workflow Contexts
+# Contexts are collections of variables that GitHub makes available.
+
+on: push
+
+jobs:
+  display-contexts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Dump Job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+
+      - name: Dump Runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+
+# Common Contexts for the Exam:
+# - github: Info about the workflow run (event, actor, repository, etc.).
+# - env: Contains variables set in the workflow, job, or step.
+# - vars: Contains configuration variables (repository/org level).
+# - secrets: Contains secrets (redacted in logs).
+# - inputs: Contains inputs passed via workflow_dispatch or workflow_call.
+# - runner: Info about the runner executing the job.

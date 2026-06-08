@@ -38,7 +38,7 @@ on:
       # This workflow file itself
       - '.github/workflows/02-push-trigger.yml'
 
-      # Exclude documentation folder
+      # Exclude documentation  folder
       # Must come after positive patterns
       - '!docs/**'
 

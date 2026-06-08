@@ -1,64 +1,30 @@
 name: 02 Push Trigger
 
-# This workflow demonstrates filtering push events
-# using branches, tags, and paths.
-
 on:
   push:
-    # Branch filters
     branches:
-      # Run on main
       - main
-
-      # Run on release branches
-      # Examples:
-      # releases/v1
-      # releases/v2
       - 'releases/**'
-
-      # Exclude development branches
-      # Examples:
-      # dev/test
-      # dev/feature-login
       - '!dev/**'
-
-    # Tag filters
-    tags:
-      # Run on tags like:
-      # v1.0
-      # v1.1
-      # v1.2.3
-      - 'v1.*'
-
-    # Path filters
     paths:
-      # Any file under src/
       - 'src/**'
-
-      # This workflow file itself
       - '.github/workflows/02-push-trigger.yml'
-
-      # Exclude documentation  folder
-      # Must come after positive patterns
       - '!docs/**'
+    tags:
+      - 'v1.*'
 
 jobs:
   build:
     name: Build Job
-
-    # GitHub-hosted Ubuntu runner
     runs-on: ubuntu-latest
 
     steps:
-      # Clone repository
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Print success message
       - name: Display Message
         run: echo "Workflow triggered successfully"
 
-      # Show trigger information
       - name: Print Context
         run: |
           echo "Event: ${{ github.event_name }}"

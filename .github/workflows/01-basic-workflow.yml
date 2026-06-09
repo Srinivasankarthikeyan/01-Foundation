@@ -1,9 +1,11 @@
 name: 01 Basic Workflow
 # The name of the workflow as it appears in the Actions tab of the GitHub repository.
 
-on: [push]
-# The 'on' keyword defines the event that triggers the workflow. 
-# [push] is a shorthand for triggering on any push to any branch.
+on:
+  push:
+  workflow_call:
+# The 'on' keyword defines the event that triggers the workflow.
+# Added workflow_call so this workflow can be invoked from another workflow.
 
 jobs:
   # A workflow run is made up of one or more jobs.
